@@ -2,7 +2,17 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+async function clearPreviousSeed() {
+  // Exclua todos os produtos
+  await prisma.product.deleteMany({});
+
+  // Em seguida, exclua todas as categorias
+  await prisma.category.deleteMany({});
+  console.log('Todos os dados anteriores foram removidos com sucesso.');
+}
+
 async function main() {
+  await clearPreviousSeed();
   try {
     const mousesCategory = await prisma.category.create({
       data: {
