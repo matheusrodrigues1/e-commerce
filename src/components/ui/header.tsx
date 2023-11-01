@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PercentCircleIcon, PercentIcon, ShoppingCartIcon } from 'lucide-react'
+import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PercentIcon, ShoppingCartIcon } from 'lucide-react'
 import { Card } from './card'
 import { Button } from './button'
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from './sheet'
@@ -9,6 +9,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { Separator } from '@radix-ui/react-separator'
 import Link from 'next/link'
+import Cart from './cart'
 
 const Header = () =>  {
   const {status, data} = useSession();
@@ -88,12 +89,22 @@ const Header = () =>  {
           </div>
         </SheetContent>
       </Sheet>
+
       <Link href='/'>
         <h1 className='text-lg font-semibold'><span className='text-primary'>FSW</span> Store</h1>
       </Link>
-      <Button size="icon" variant="outline">
-        <ShoppingCartIcon/>
-      </Button>
+
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button size="icon" variant="outline">
+            <ShoppingCartIcon/>
+          </Button>
+        </SheetTrigger>
+
+        <SheetContent>
+          <Cart/>
+        </SheetContent>
+      </Sheet>
     </Card>
   )
 }
